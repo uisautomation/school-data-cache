@@ -1,4 +1,5 @@
 import json
+import logging
 
 import boto3
 import zeep
@@ -6,6 +7,10 @@ import zeep
 from cache_school_data.secrets import *
 from cache_school_data.settings_ansible import *
 
+FORMAT = '%(levelname)s %(asctime)s %(pathname)s:%(lineno)d %(funcName)s "%(message)s"'
+logging.basicConfig(level=logging.INFO, format=FORMAT)
+
+logger = logging.getLogger('tcpserver')
 
 def cache_school_data():
     """
@@ -31,7 +36,7 @@ def cache_school_data():
         Key=SCHOOL_DATA_CACHE,
         ACL='public-read'
     )
-    print('FIXME')
+    logger.info('%s transferred to %s' % (SCHOOL_DATA_CACHE, AWS_STORAGE_BUCKET_NAME))
 
 
 def s3_client():
