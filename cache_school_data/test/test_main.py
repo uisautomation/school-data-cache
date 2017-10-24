@@ -91,6 +91,8 @@ class UtilsTests(TestCase):
 
     def patch_soap_client(self, target, client_mock):
         """
+        FIXME
+
         Helper method for patching utils.soap_client(). Takes care of the client.bind() call.
 
         :param target: the patch target
@@ -106,6 +108,8 @@ class UtilsTests(TestCase):
 
     def patch(self, target_name, side_effect=None):
         """
+        FIXME
+
         Patching helper method
 
         :param target_name: name of target method to patch
