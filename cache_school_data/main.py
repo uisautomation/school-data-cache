@@ -31,6 +31,7 @@ def cache_school_data():
         Key=SCHOOL_DATA_CACHE,
         ACL='public-read'
     )
+    print('FIXME')
 
 
 def s3_client():

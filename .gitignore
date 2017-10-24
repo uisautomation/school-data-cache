@@ -6,7 +6,7 @@ __pycache__/
 .idea/
 
 # Local Config
-*/secrets.py
+cache_school_data/secrets.py
 
 .DS_Store
 venv/**
