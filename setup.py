@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     license='MIT',
-    description='Caches ',
+    description='Caches School Data',
     long_description=open('README.md').read(),
     url='https://git.csx.cam.ac.uk/i/ucs/automation/cache_school_data',
     author='Automation team, University Information Services, University of Cambridge',
