@@ -20,7 +20,7 @@ setup(
         'boto3',
         'zeep',
     ],
-    tests_require=['mock'],
+    tests_require=['mock', 'callee'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

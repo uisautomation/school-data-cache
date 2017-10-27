@@ -1,21 +1,11 @@
 import json
 from unittest import TestCase
 
+import callee
 from mock import Mock, patch, MagicMock
 
 from cache_school_data.main import cache_school_data
 from cache_school_data.settings_ansible import SCHOOL_DATA_CACHE, AWS_STORAGE_BUCKET_NAME
-
-
-class Capture:
-    """
-    Captures an argument value from a call on a mock.
-    """
-    value = None
-
-    def __eq__(self, other):
-        self.value = other
-        return True
 
 
 class UtilsTests(TestCase):
@@ -68,16 +58,16 @@ class UtilsTests(TestCase):
         # test
         cache_school_data()
 
-        body_capture = Capture()
+        body_captor = callee.general.Captor()
 
         mock_s3.put_object.assert_called_with(
-            Body=body_capture,
+            Body=body_captor,
             Bucket=AWS_STORAGE_BUCKET_NAME,
             Key=SCHOOL_DATA_CACHE,
             ACL='public-read'
         )
 
-        result = json.loads(body_capture.value)
+        result = json.loads(body_captor.arg)
         self.assertEqual(len(result), 7)
         self.assertEqual(result[0]['SchoolCode'], 'O')
         self.assertEqual(result[0]['SchoolName'], 'Non-School')
