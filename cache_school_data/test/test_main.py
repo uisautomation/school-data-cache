@@ -4,8 +4,7 @@ from unittest import TestCase
 import callee
 from mock import Mock, patch, MagicMock
 
-from cache_school_data.main import cache_school_data
-from cache_school_data.settings_ansible import SCHOOL_DATA_CACHE, AWS_STORAGE_BUCKET_NAME
+from cache_school_data.main import cache_school_data, settings
 
 
 class UtilsTests(TestCase):
@@ -62,8 +61,8 @@ class UtilsTests(TestCase):
 
         mock_s3.put_object.assert_called_with(
             Body=body_captor,
-            Bucket=AWS_STORAGE_BUCKET_NAME,
-            Key=SCHOOL_DATA_CACHE,
+            Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+            Key=settings.SCHOOL_DATA_CACHE,
             ACL='public-read'
         )
 

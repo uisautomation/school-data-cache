@@ -2,15 +2,21 @@ import json
 import logging
 
 import boto3
+import os
 import zeep
 
 from cache_school_data.secrets import *
-from cache_school_data.settings_ansible import *
+
+if os.environ.get('APP_ENV', 'test') == 'production':
+    import cache_school_data.settings_production as settings
+else:
+    import cache_school_data.settings_test as settings
 
 FORMAT = '%(levelname)s %(asctime)s %(pathname)s:%(lineno)d %(funcName)s "%(message)s"'
 logging.basicConfig(level=logging.INFO, format=FORMAT)
 
 logger = logging.getLogger('tcpserver')
+
 
 def cache_school_data():
     """
@@ -32,11 +38,11 @@ def cache_school_data():
 
     s3_client().put_object(
         Body=school_data_string,
-        Bucket=AWS_STORAGE_BUCKET_NAME,
-        Key=SCHOOL_DATA_CACHE,
+        Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+        Key=settings.SCHOOL_DATA_CACHE,
         ACL='public-read'
     )
-    logger.info('%s transferred to %s' % (SCHOOL_DATA_CACHE, AWS_STORAGE_BUCKET_NAME))
+    logger.info('%s transferred to %s' % (settings.SCHOOL_DATA_CACHE, settings.AWS_STORAGE_BUCKET_NAME))
 
 
 def s3_client():
@@ -47,7 +53,7 @@ def s3_client():
         's3',
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-        region_name=AWS_S3_REGION_NAME
+        region_name=settings.AWS_S3_REGION_NAME
     )
 
 
@@ -55,7 +61,7 @@ def contacts_client():
     """
     :return: a Contacts API soap client
     """
-    return zeep.Client(CONTACTS_API_URL)
+    return zeep.Client(settings.CONTACTS_API_URL)
 
 
 if __name__ == '__main__':
